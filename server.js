@@ -21,6 +21,7 @@ Date: ${date}
 Time: ${new Date().toLocaleString()}`;
 
     try {
+        console.log(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`);
         await axios.post(
             `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
             {
