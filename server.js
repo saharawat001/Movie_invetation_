@@ -10,53 +10,47 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/response", async (req, res) => {
-
     const { answer, date } = req.body;
 
-    const message =
-`🎉 She responded!
+    const message = `🎉 She responded!
 
-Answer : ${answer}
+Answer: ${answer}
 
-Date : ${date}
+Date: ${date}
 
-Time : ${new Date().toLocaleString()}`;
+Time: ${new Date().toLocaleString()}`;
 
     try {
-
         await axios.post(
             `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
             {
                 chat_id: process.env.CHAT_ID,
-                text: message
+                text: message,
             }
         );
 
-        res.json({
-            success:true
+        res.status(200).json({
+            success: true,
+            message: "Telegram message sent!"
         });
 
     } catch (err) {
-    console.error("Telegram Error:");
+        console.error("Telegram Error:");
 
-    if (err.response) {
-        console.log(err.response.data);
-    } else {
-        console.log(err.message);
+        if (err.response) {
+            console.log(err.response.data);
+        } else {
+            console.log(err.message);
+        }
+
+        res.status(500).json({
+            success: false
+        });
     }
+});
 
-    res.status(500).json({
-        success: false
-    });
-}
-}
+const PORT = process.env.PORT || 3000;
 
-    
-
-);
-
-app.listen(process.env.PORT,()=>{
-
-    console.log("Server Running");
-
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
