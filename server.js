@@ -11,6 +11,9 @@ app.use(express.json());
 
 app.post("/response", async (req, res) => {
     const { answer, date } = req.body;
+        console.log("BOT TOKEN EXISTS:", !!process.env.BOT_TOKEN);
+    console.log("CHAT ID:", process.env.CHAT_ID);
+    console.log(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`);
 
     const message = `🎉 She responded!
 
